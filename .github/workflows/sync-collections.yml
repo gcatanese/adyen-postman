@@ -1,0 +1,26 @@
+# Update all collections on Postman
+
+name: "Sync Postman collections"
+
+on:
+  workflow_dispatch:
+jobs:
+  update-collections:
+    name: "Update Checkout"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: update-checkout
+        uses: gcatanese/push-to-postman-action@main
+        with:
+          goal: update
+          postman-key: ${{ secrets.POSTMAN_API_KEY }}
+          postman-file: 'postman/CheckoutService-v71.json'
+          collection-id: '8426282-04caed9f-44a4-49a1-a803-ccd4f08bbbcb'
+      - name: update-balance-control
+        uses: gcatanese/push-to-postman-action@main
+        with:
+          goal: update
+          postman-key: ${{ secrets.POSTMAN_API_KEY }}
+          postman-file: 'postman/BalanceControlService-v1.json'
+          collection-id: '8426282-04caed9f-44a4-49a1-a803-ccd4f08bbbcb'          
