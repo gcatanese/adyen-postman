@@ -23,11 +23,11 @@ jobs:
           goal: update
           postman-key: ${{ secrets.POSTMAN_API_KEY }}
           postman-file: 'postman/BalanceControlService-v1.json'
-          collection-id: '8426282-04caed9f-44a4-49a1-a803-ccd4f08bbbcb'          
-      - name: update-lem
+          collection-id: '8426282-959dfdf2-5a52-4f9f-86c6-db3743d43313'  
+      - name: update-management
         uses: gcatanese/push-to-postman-action@main
         with:
           goal: update
           postman-key: ${{ secrets.POSTMAN_API_KEY }}
-          postman-file: 'postman/LegalEntityService-v3.json'
-          collection-id: '8426282-04caed9f-44a4-49a1-a803-ccd4f08bbbcb'          
+          postman-file: 'postman/ManagementService-v3.json'
+          collection-id: '8426282-a4091abb-0cb9-48fa-9c73-5869e2212c33'   
