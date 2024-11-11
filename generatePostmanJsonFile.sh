@@ -23,7 +23,7 @@ NAME=$(echo $FILENAME | sed 's/-.*//' | sed 's/.*\///')
 REAL_NAME=$(sed '/title:/!d;q' $FILENAME | sed 's/.*://')
 VERSION=$(echo $FILENAME | sed 's/.*-v//' | sed 's/\..*//')
 
-#  echo "Generating $FILENAME $BASE $NAME $REAL_NAME $VERSION $DATE"
+echo "Generating $FILENAME $BASE $NAME $REAL_NAME $VERSION $DATE"
 
 sed -i.bak2 "0,/title:.*/{s//title: $REAL_NAME\ (v$VERSION)/}" $FILENAME # Set unique name of API for Postman
 
