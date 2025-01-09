@@ -1,0 +1,1856 @@
+{
+	"info": {
+		"name": "Account API",
+		"description": {
+		    "content": "This API is used for the classic integration. If you are just starting your implementation, refer to our [new integration guide](https://docs.adyen.com/adyen-for-platforms-model) instead.\n\nThe Account API provides endpoints for managing account-related entities on your platform. These related entities include account holders, accounts, bank accounts, shareholders, and verification-related documents. The management operations include actions such as creation, retrieval, updating, and deletion of them.\n\nFor more information, refer to our [documentation](https://docs.adyen.com/classic-platforms).\n## Authentication\nYour Adyen contact will provide your API credential and an API key. To connect to the API, add an `X-API-Key` header with the API key as the value, for example:\n\n ```\ncurl\n-H \"Content-Type: application/json\" \\n-H \"X-API-Key: YOUR_API_KEY\" \\n...\n```\n\nAlternatively, you can use the username and password to connect to the API using basic authentication. For example:\n\n```\ncurl\n-U \"ws@MarketPlace.YOUR_PLATFORM_ACCOUNT\":\"YOUR_WS_PASSWORD\" \\n-H \"Content-Type: application/json\" \\n...\n```\nWhen going live, you need to generate new web service user credentials to access the [live endpoints](https://docs.adyen.com/development-resources/live-endpoints).\n\n## Versioning\nThe Account API supports [versioning](https://docs.adyen.com/development-resources/versioning) using a version suffix in the endpoint URL. This suffix has the following format: \"vXX\", where XX is the version number.\n\nFor example:\n```\nhttps://cal-test.adyen.com/cal/services/Account/v6/createAccountHolder\n```",
+		    "type": "text/markdown"
+		},
+		"version": "6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+	        {
+	            "name": "Account holders",
+	            "item": [
+	                        {
+    "name": "/closeAccountHolder",
+                "description": "Changes the [status of an account holder](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#account-holder-statuses) to **Closed**. This state is final. If an account holder is closed, you can't process transactions, pay out funds, or reopen it. If payments are made to an account of an account holder with a **Closed** [`status`](https://docs.adyen.com/api-explorer/#/Account/latest/post/getAccountHolder__resParam_verification-accountHolder-checks-status), the payments are sent to your liable account.",
+                 "item": [
+                            {
+                                "name": "Close an account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/closeAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "closeAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Changes the [status of an account holder](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#account-holder-statuses) to **Closed**. This state is final. If an account holder is closed, you can't process transactions, pay out funds, or reopen it. If payments are made to an account of an account holder with a **Closed** [`status`](https://docs.adyen.com/api-explorer/#/Account/latest/post/getAccountHolder__resParam_verification-accountHolder-checks-status), the payments are sent to your liable account."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/closeStores",
+                "description": "Closes stores associated with an account holder.",
+                 "item": [
+                            {
+                                "name": "Close stores",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"<string>\",\n \"stores\": \"<string>\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/closeStores",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "closeStores"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Closes stores associated with an account holder."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/createAccountHolder",
+                "description": "Creates an account holder that [represents the sub-merchant's entity](https://docs.adyen.com/classic-platforms/account-structure#your-platform) in your platform. The details that you need to provide in the request depend on the sub-merchant's legal entity type. For more information, refer to [Account holder and accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#legal-entity-types).",
+                 "item": [
+                            {
+                                "name": "Create business account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"country\": \"US\"\n},\n \"businessDetails\": {\n \"doingBusinessAs\": \"Real Good Restaurant\",\n \"legalBusinessName\": \"Real Good Restaurant Inc.\",\n \"shareholders\": [{\n \"shareholderType\": \"Controller\",\n \"name\": {\n \"firstName\": \"John\",\n \"lastName\": \"Carpenter\"\n},\n \"address\": {\n \"country\": \"NL\"\n},\n \"email\": \"testshareholder@email.com\"\n}]\n},\n \"email\": \"test@email.com\",\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"legalEntity\": \"Business\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/createAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "createAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Creates an account holder that [represents the sub-merchant's entity](https://docs.adyen.com/classic-platforms/account-structure#your-platform) in your platform. The details that you need to provide in the request depend on the sub-merchant's legal entity type. For more information, refer to [Account holder and accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#legal-entity-types)."
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"pspReference\": \"ALPHANUMERIC_UNIQUE_RESPONSE_REFERENCE\",\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"country\": \"US\"\n},\n \"bankAccountDetails\": [],\n \"businessDetails\": {\n \"doingBusinessAs\": \"Real Good Restaurant\",\n \"legalBusinessName\": \"Real Good Restaurant Inc.\",\n \"shareholders\": [{\n \"address\": {\n \"country\": \"NL\"\n},\n \"email\": \"testshareholder@email.com\",\n \"name\": {\n \"firstName\": \"John\",\n \"lastName\": \"Carpenter\"\n},\n \"shareholderCode\": \"SHAREHOLDER_CODE\",\n \"shareholderType\": \"Controller\"\n}]\n},\n \"email\": \"test@email.com\",\n \"merchantCategoryCode\": \"MCC_DEFAULT_VALUE\",\n \"payoutMethods\": [],\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"accountHolderStatus\": {\n \"status\": \"Active\",\n \"processingState\": {\n \"disabled\": false,\n \"processedFrom\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"processedTo\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"tierNumber\": 0\n},\n \"payoutState\": {\n \"allowPayout\": true,\n \"payoutLimit\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"disabled\": false,\n \"tierNumber\": 0\n},\n \"events\": []\n},\n \"legalEntity\": \"Business\",\n \"invalidFields\": [],\n \"verification\": {\n \n}\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"country\": \"US\"\n},\n \"businessDetails\": {\n \"doingBusinessAs\": \"Real Good Restaurant\",\n \"legalBusinessName\": \"Real Good Restaurant Inc.\",\n \"shareholders\": [{\n \"shareholderType\": \"Controller\",\n \"name\": {\n \"firstName\": \"John\",\n \"lastName\": \"Carpenter\"\n},\n \"address\": {\n \"country\": \"NL\"\n},\n \"email\": \"testshareholder@email.com\"\n}]\n},\n \"email\": \"test@email.com\",\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"legalEntity\": \"Business\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/createAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "createAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Creates an account holder that [represents the sub-merchant's entity](https://docs.adyen.com/classic-platforms/account-structure#your-platform) in your platform. The details that you need to provide in the request depend on the sub-merchant's legal entity type. For more information, refer to [Account holder and accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#legal-entity-types)."
+}
+                                        }
+                                ]
+                            },
+                            {
+                                "name": "Create individual account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"email\": \"tim@green.com\",\n \"individualDetails\": {\n \"name\": {\n \"firstName\": \"Tim\",\n \"lastName\": \"Green\"\n}\n},\n \"address\": {\n \"country\": \"US\"\n},\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"legalEntity\": \"Individual\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/createAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "createAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Creates an account holder that [represents the sub-merchant's entity](https://docs.adyen.com/classic-platforms/account-structure#your-platform) in your platform. The details that you need to provide in the request depend on the sub-merchant's legal entity type. For more information, refer to [Account holder and accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#legal-entity-types)."
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"pspReference\": \"ALPHANUMERIC_UNIQUE_RESPONSE_REFERENCE\",\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"country\": \"US\"\n},\n \"bankAccountDetails\": [],\n \"email\": \"tim@green.com\",\n \"individualDetails\": {\n \"name\": {\n \"firstName\": \"Tim\",\n \"lastName\": \"Green\"\n}\n},\n \"merchantCategoryCode\": \"5045\",\n \"payoutMethods\": [],\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"accountHolderStatus\": {\n \"status\": \"Active\",\n \"processingState\": {\n \"disabled\": false,\n \"processedFrom\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"processedTo\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"tierNumber\": 0\n},\n \"payoutState\": {\n \"allowPayout\": true,\n \"payoutLimit\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"disabled\": false,\n \"tierNumber\": 0\n},\n \"events\": []\n},\n \"legalEntity\": \"Individual\",\n \"invalidFields\": [],\n \"verification\": {\n \n}\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"email\": \"tim@green.com\",\n \"individualDetails\": {\n \"name\": {\n \"firstName\": \"Tim\",\n \"lastName\": \"Green\"\n}\n},\n \"address\": {\n \"country\": \"US\"\n},\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"legalEntity\": \"Individual\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/createAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "createAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Creates an account holder that [represents the sub-merchant's entity](https://docs.adyen.com/classic-platforms/account-structure#your-platform) in your platform. The details that you need to provide in the request depend on the sub-merchant's legal entity type. For more information, refer to [Account holder and accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#legal-entity-types)."
+}
+                                        }
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/getAccountHolder",
+                "description": "Returns the details of an account holder.",
+                 "item": [
+                            {
+                                "name": "Get an account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountCode\": \"CODE_OF_ACCOUNT\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/getAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "getAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Returns the details of an account holder."
+}
+                                ,"response": [
+                                ]
+                            },
+                            {
+                                "name": "Get an account holder for the account",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/getAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "getAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Returns the details of an account holder."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/getTaxForm",
+                "description": "Generates a tax form for account holders operating in the US. For more information, refer to [Providing tax forms](https://docs.adyen.com/classic-platforms/tax-forms).",
+                 "item": [
+                            {
+                                "name": "Get a tax form",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"formType\": \"1099-K\",\n \"year\": 2020\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/getTaxForm",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "getTaxForm"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Generates a tax form for account holders operating in the US. For more information, refer to [Providing tax forms](https://docs.adyen.com/classic-platforms/tax-forms)."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/suspendAccountHolder",
+                "description": "Changes the [status of an account holder](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#account-holder-statuses) to **Suspended**.",
+                 "item": [
+                            {
+                                "name": "Suspend an account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/suspendAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "suspendAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Changes the [status of an account holder](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#account-holder-statuses) to **Suspended**."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/unSuspendAccountHolder",
+                "description": "Changes the [status of an account holder](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#account-holder-statuses) from **Suspended** to **Inactive**.  Account holders can have a **Suspended** [`status`](https://docs.adyen.com/api-explorer/#/Account/latest/post/getAccountHolder__resParam_verification-accountHolder-checks-status) if you suspend them through the [`/suspendAccountHolder`](https://docs.adyen.com/api-explorer/#/Account/v5/post/suspendAccountHolder) endpoint or if a verification deadline expires.  You can only unsuspend account holders if they do not have verification checks with a **FAILED** [`status`](https://docs.adyen.com/api-explorer/#/Account/latest/post/getAccountHolder__resParam_verification-accountHolder-checks-status).",
+                 "item": [
+                            {
+                                "name": "Unsuspend an account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/unSuspendAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "unSuspendAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Changes the [status of an account holder](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#account-holder-statuses) from **Suspended** to **Inactive**.  Account holders can have a **Suspended** [`status`](https://docs.adyen.com/api-explorer/#/Account/latest/post/getAccountHolder__resParam_verification-accountHolder-checks-status) if you suspend them through the [`/suspendAccountHolder`](https://docs.adyen.com/api-explorer/#/Account/v5/post/suspendAccountHolder) endpoint or if a verification deadline expires.  You can only unsuspend account holders if they do not have verification checks with a **FAILED** [`status`](https://docs.adyen.com/api-explorer/#/Account/latest/post/getAccountHolder__resParam_verification-accountHolder-checks-status)."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/updateAccountHolder",
+                "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  ",
+                 "item": [
+                            {
+                                "name": "Add shareholders",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"businessDetails\": {\n \"shareholders\": [{\n \"shareholderType\": \"Controller\",\n \"name\": {\n \"firstName\": \"Shelly\",\n \"lastName\": \"Eller\"\n},\n \"address\": {\n \"city\": \"San Francisco\",\n \"country\": \"US\",\n \"houseNumberOrName\": \"274\",\n \"postalCode\": \"94107\",\n \"stateOrProvince\": \"CA\",\n \"street\": \"Brannan\"\n},\n \"email\": \"testshareholder2@email.com\",\n \"personalData\": {\n \"dateOfBirth\": \"1970-01-01\",\n \"documentData\": [{\n \"number\": \"1234567890\",\n \"type\": \"ID\"\n}]\n}\n}],\n \"taxId\": \"123456789\"\n},\n \"email\": \"test@email.com\",\n \"fullPhoneNumber\": \"+14154890281\",\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [],\n \"pspReference\": \"ALPHANUMERIC_UNIQUE_RESPONSE_REFERENCE\",\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"bankAccountDetails\": [],\n \"businessDetails\": {\n \"shareholders\": [{\n \"address\": {\n \"city\": \"San Francisco\",\n \"country\": \"US\",\n \"houseNumberOrName\": \"274\",\n \"postalCode\": \"94107\",\n \"stateOrProvince\": \"CA\",\n \"street\": \"Brannan\"\n},\n \"email\": \"testshareholder2@email.com\",\n \"name\": {\n \"firstName\": \"Shelly\",\n \"lastName\": \"Eller\"\n},\n \"personalData\": {\n \"dateOfBirth\": \"1970-01-01\",\n \"documentData\": [{\n \"number\": \"1234567890\",\n \"type\": \"ID\"\n}]\n},\n \"shareholderCode\": \"SHAREHOLDER_CODE\",\n \"shareholderType\": \"Controller\"\n}],\n \"taxId\": \"123456789\"\n},\n \"email\": \"test@email.com\",\n \"payoutMethods\": [],\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"businessDetails\": {\n \"shareholders\": [{\n \"shareholderType\": \"Controller\",\n \"name\": {\n \"firstName\": \"Shelly\",\n \"lastName\": \"Eller\"\n},\n \"address\": {\n \"city\": \"San Francisco\",\n \"country\": \"US\",\n \"houseNumberOrName\": \"274\",\n \"postalCode\": \"94107\",\n \"stateOrProvince\": \"CA\",\n \"street\": \"Brannan\"\n},\n \"email\": \"testshareholder2@email.com\",\n \"personalData\": {\n \"dateOfBirth\": \"1970-01-01\",\n \"documentData\": [{\n \"number\": \"1234567890\",\n \"type\": \"ID\"\n}]\n}\n}],\n \"taxId\": \"123456789\"\n},\n \"email\": \"test@email.com\",\n \"fullPhoneNumber\": \"+14154890281\",\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                        }
+                                ]
+                            },
+                            {
+                                "name": "Update bank account details",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"email\": \"tim@green.com\",\n \"individualDetails\": {\n \"name\": {\n \"firstName\": \"Tim\",\n \"lastName\": \"Green\"\n}\n},\n \"bankAccountDetails\": [{\n \"accountNumber\": \"1678116852\",\n \"branchCode\": \"053101273\",\n \"countryCode\": \"US\",\n \"currencyCode\": \"USD\",\n \"ownerName\": \"Tim Green\",\n \"ownerHouseNumberOrName\": \"100\",\n \"ownerStreet\": \"Main Street\",\n \"ownerPostalCode\": \"02894\",\n \"ownerCity\": \"Springfield\",\n \"ownerState\": \"AZ\",\n \"ownerCountryCode\": \"US\"\n}]\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [],\n \"pspReference\": \"ALPHANUMERIC_UNIQUE_RESPONSE_REFERENCE\",\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"country\": \"US\"\n},\n \"bankAccountDetails\": [{\n \"accountNumber\": \"######6852\",\n \"bankAccountUUID\": \"BANK_ACCOUNT_UUID\",\n \"branchCode\": \"053101273\",\n \"countryCode\": \"US\",\n \"currencyCode\": \"USD\",\n \"ownerCity\": \"Springfield\",\n \"ownerCountryCode\": \"US\",\n \"ownerHouseNumberOrName\": \"100\",\n \"ownerName\": \"Tim Green\",\n \"ownerPostalCode\": \"02894\",\n \"ownerState\": \"AZ\",\n \"ownerStreet\": \"Main Street\",\n \"primaryAccount\": false\n}],\n \"businessDetails\": {\n \"doingBusinessAs\": \"Real Good Restaurant\",\n \"legalBusinessName\": \"Real Good Restaurant Inc.\",\n \"shareholders\": [{\n \"address\": {\n \"country\": \"NL\"\n},\n \"email\": \"testshareholder@email.com\",\n \"name\": {\n \"firstName\": \"John\",\n \"lastName\": \"Carpenter\"\n},\n \"shareholderCode\": \"SHAREHOLDER_CODE\",\n \"shareholderType\": \"Controller\"\n}]\n},\n \"email\": \"tim@green.com\",\n \"merchantCategoryCode\": \"MCC_DEFAULT_VALUE\",\n \"payoutMethods\": [],\n \"webAddress\": \"https://www.your-website.com\"\n},\n \"accountHolderStatus\": {\n \"status\": \"Active\",\n \"processingState\": {\n \"disabled\": false,\n \"processedFrom\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"processedTo\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"tierNumber\": 0\n},\n \"payoutState\": {\n \"allowPayout\": true,\n \"payoutLimit\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"disabled\": false,\n \"tierNumber\": 0\n}\n},\n \"legalEntity\": \"Business\",\n \"verification\": {\n \n}\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"email\": \"tim@green.com\",\n \"individualDetails\": {\n \"name\": {\n \"firstName\": \"Tim\",\n \"lastName\": \"Green\"\n}\n},\n \"bankAccountDetails\": [{\n \"accountNumber\": \"1678116852\",\n \"branchCode\": \"053101273\",\n \"countryCode\": \"US\",\n \"currencyCode\": \"USD\",\n \"ownerName\": \"Tim Green\",\n \"ownerHouseNumberOrName\": \"100\",\n \"ownerStreet\": \"Main Street\",\n \"ownerPostalCode\": \"02894\",\n \"ownerCity\": \"Springfield\",\n \"ownerState\": \"AZ\",\n \"ownerCountryCode\": \"US\"\n}]\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                        }
+                                ]
+                            },
+                            {
+                                "name": "Update business details",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"businessDetails\": {\n \"shareholders\": [{\n \"shareholderType\": \"Owner\",\n \"address\": {\n \"city\": \"Amsterdam\",\n \"country\": \"NL\",\n \"houseNumberOrName\": \"1\",\n \"postalCode\": \"1111AA\",\n \"stateOrProvince\": \"NH\",\n \"street\": \"Main Street\"\n},\n \"email\": \"testshareholder2@email.com\",\n \"name\": {\n \"firstName\": \"Shelly\",\n \"lastName\": \"Eller\"\n}\n}],\n \"taxId\": \"BV123456789\"\n},\n \"email\": \"test@email.com\",\n \"fullPhoneNumber\": \"+31612345678\",\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [],\n \"pspReference\": \"ALPHANUMERIC_UNIQUE_RESPONSE_REFERENCE\",\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"bankAccountDetails\": [],\n \"businessDetails\": {\n \"shareholders\": [{\n \"address\": {\n \"city\": \"Amsterdam\",\n \"country\": \"NL\",\n \"houseNumberOrName\": \"1\",\n \"postalCode\": \"1111AA\",\n \"stateOrProvince\": \"NH\",\n \"street\": \"Main Street\"\n},\n \"email\": \"testshareholder2@email.com\",\n \"name\": {\n \"firstName\": \"Shelly\",\n \"lastName\": \"Eller\"\n},\n \"shareholderCode\": \"SHAREHOLDER_CODE\",\n \"shareholderType\": \"Owner\"\n}],\n \"taxId\": \"BV123456789\"\n},\n \"email\": \"test@email.com\",\n \"payoutMethods\": [],\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"businessDetails\": {\n \"shareholders\": [{\n \"shareholderType\": \"Owner\",\n \"address\": {\n \"city\": \"Amsterdam\",\n \"country\": \"NL\",\n \"houseNumberOrName\": \"1\",\n \"postalCode\": \"1111AA\",\n \"stateOrProvince\": \"NH\",\n \"street\": \"Main Street\"\n},\n \"email\": \"testshareholder2@email.com\",\n \"name\": {\n \"firstName\": \"Shelly\",\n \"lastName\": \"Eller\"\n}\n}],\n \"taxId\": \"BV123456789\"\n},\n \"email\": \"test@email.com\",\n \"fullPhoneNumber\": \"+31612345678\",\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                        }
+                                ]
+                            },
+                            {
+                                "name": "Update individual with documentData property",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"city\": \"NY\",\n \"country\": \"US\",\n \"postalCode\": \"12345\",\n \"stateOrProvince\": \"NH\",\n \"street\": \"Main Street\",\n \"houseNumberOrName\": \"100\"\n},\n \"email\": \"test@adyen.com\",\n \"merchantCategoryCode\": \"7999\",\n \"fullPhoneNumber\": \"+31612345678\",\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [],\n \"pspReference\": \"ALPHANUMERIC_UNIQUE_RESPONSE_REFERENCE\",\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"city\": \"NY\",\n \"country\": \"US\",\n \"houseNumberOrName\": \"100\",\n \"postalCode\": \"12345\",\n \"stateOrProvince\": \"NH\",\n \"street\": \"Main Street\"\n},\n \"bankAccountDetails\": [],\n \"businessDetails\": {\n \"doingBusinessAs\": \"Real Good Restaurant\",\n \"legalBusinessName\": \"Real Good Restaurant Inc.\",\n \"shareholders\": [{\n \"address\": {\n \"country\": \"NL\"\n},\n \"email\": \"testshareholder@email.com\",\n \"name\": {\n \"firstName\": \"John\",\n \"lastName\": \"Carpenter\"\n},\n \"shareholderCode\": \"SHAREHOLDER_CODE\",\n \"shareholderType\": \"Controller\"\n}]\n},\n \"email\": \"test@adyen.com\",\n \"merchantCategoryCode\": \"UPDATE_MCC\",\n \"payoutMethods\": [],\n \"phoneNumber\": {\n \"phoneCountryCode\": \"NL\",\n \"phoneNumber\": \"612345678\",\n \"phoneType\": \"Landline\"\n},\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n},\n \"accountHolderStatus\": {\n \"status\": \"Active\",\n \"processingState\": {\n \"disabled\": false,\n \"processedFrom\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"processedTo\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"tierNumber\": 0\n},\n \"payoutState\": {\n \"allowPayout\": true,\n \"payoutLimit\": {\n \"currency\": \"USD\",\n \"value\": 0\n},\n \"disabled\": false,\n \"tierNumber\": 0\n}\n},\n \"legalEntity\": \"Business\",\n \"verification\": {\n \n}\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"YOUR_UNIQUE_ACCOUNT_HOLDER_CODE\",\n \"accountHolderDetails\": {\n \"address\": {\n \"city\": \"NY\",\n \"country\": \"US\",\n \"postalCode\": \"12345\",\n \"stateOrProvince\": \"NH\",\n \"street\": \"Main Street\",\n \"houseNumberOrName\": \"100\"\n},\n \"email\": \"test@adyen.com\",\n \"merchantCategoryCode\": \"7999\",\n \"fullPhoneNumber\": \"+31612345678\",\n \"webAddress\": \"http://www.accountholderwebsite.com\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the `accountHolderDetails` and `processingTier` of an account holder, and adds bank accounts and shareholders.  When updating `accountHolderDetails`, parameters that are not included in the request are left unchanged except for the following object:  * `metadata`: Updating the metadata replaces the entire object. This means that to update an existing key-value pair, you must provide the changes, as well as other existing key-value pairs.  When updating any field in the following objects, you must submit all the fields required for validation:   * `address`  * `fullPhoneNumber`  * `bankAccountDetails.BankAccountDetail`  * `businessDetails.shareholders.ShareholderContact`   For example, to update the `address.postalCode`, you must also submit the `address.country`, `.city`, `.street`, `.postalCode`, and possibly `.stateOrProvince` so that the address can be validated.  To add a bank account or shareholder, provide the bank account or shareholder details without a `bankAccountUUID` or a `shareholderCode`.  "
+}
+                                        }
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/updateAccountHolderState",
+                "description": "Disables or enables the processing or payout state of an account holder.",
+                 "item": [
+                            {
+                                "name": "Update account holder state",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"disable\": true,\n \"reason\": \"test reason payout\",\n \"stateType\": \"Payout\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccountHolderState",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccountHolderState"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Disables or enables the processing or payout state of an account holder."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        }
+	                    ]
+	        },
+	        {
+	            "name": "Verification",
+	            "item": [
+	                        {
+    "name": "/checkAccountHolder",
+                "description": "Triggers the verification of an account holder even if the checks are not yet required for the volume that they are currently processing.",
+                 "item": [
+                            {
+                                "name": "Check the account holder.",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"accountStateType\": \"Processing\",\n \"tier\": \"2\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/checkAccountHolder",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "checkAccountHolder"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Triggers the verification of an account holder even if the checks are not yet required for the volume that they are currently processing."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/deleteBankAccounts",
+                "description": "Deletes bank accounts associated with an account holder. ",
+                 "item": [
+                            {
+                                "name": "Delete bank accounts",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"bankAccountUUIDs\": [\"eeb6ed22-3bae-483c-83b9-bc2097a75d40\"]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteBankAccounts",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteBankAccounts"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes bank accounts associated with an account holder. "
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/deleteLegalArrangements",
+                "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder.",
+                 "item": [
+                            {
+                                "name": "Delete legal arrangements",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"legalArrangements\": [{\n \"legalArrangementCode\": \"cdf92f5a-a114-4ce6-8f19-c3f6ec83141c\"\n}]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteLegalArrangements",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteLegalArrangements"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder."
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [],\n \"pspReference\": \"8816080397613514\"\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"legalArrangements\": [{\n \"legalArrangementCode\": \"cdf92f5a-a114-4ce6-8f19-c3f6ec83141c\"\n}]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteLegalArrangements",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteLegalArrangements"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder."
+}
+                                        },
+                                        {"name": "Bad Request - a problem reading or understanding the request.",
+                                        "code": 400,
+                                        "status": "Bad Request",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [{\n \"errorCode\": 34,\n \"errorDescription\": \"An invalid legalArrangementCode code is provided for value 'cdf92f5a-a114-4ce6-8f19-c3f6ec83141c'\",\n \"fieldType\": {\n \"field\": \"AccountHolderDetails.LegalArrangements.legalArrangementCode\",\n \"fieldName\": \"legalArrangementCode\"\n}\n}],\n \"pspReference\": \"9916613322577326\"\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"legalArrangements\": [{\n \"legalArrangementCode\": \"cdf92f5a-a114-4ce6-8f19-c3f6ec83141c\"\n}]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteLegalArrangements",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteLegalArrangements"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder."
+}
+                                        }
+                                ]
+                            },
+                            {
+                                "name": "Delete legal arrangement entities",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"legalArrangements\": [{\n \"legalArrangementCode\": \"cdf92f5a-a114-4ce6-8f19-c3f6ec83141c\",\n \"legalArrangementEntityCodes\": [\"755881d3-d6b0-4b34-8ace-1caceb8add63\"]\n}]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteLegalArrangements",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteLegalArrangements"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder."
+}
+                                ,"response": [
+                                        {"name": "OK - the request has succeeded.",
+                                        "code": 200,
+                                        "status": "OK",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [],\n \"pspReference\": \"8816080397613514\"\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"legalArrangements\": [{\n \"legalArrangementCode\": \"cdf92f5a-a114-4ce6-8f19-c3f6ec83141c\",\n \"legalArrangementEntityCodes\": [\"755881d3-d6b0-4b34-8ace-1caceb8add63\"]\n}]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteLegalArrangements",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteLegalArrangements"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder."
+}
+                                        },
+                                        {"name": "Bad Request - a problem reading or understanding the request.",
+                                        "code": 400,
+                                        "status": "Bad Request",
+                                        "header": [{
+                                        "key": "Content-Type",
+                                        "value": "application/json"}
+                                        ],
+                                        "_postman_previewlanguage": "json",
+                                        "cookie": [],
+                                        "body" : "{\n \"invalidFields\": [{\n \"errorCode\": 34,\n \"errorDescription\": \"An invalid legalArrangementEntityCode code is provided for value 'c92bb932-4867-4cef-bf9d-4ecde37745cf'\",\n \"fieldType\": {\n \"field\": \"AccountHolderDetails.LegalArrangements.LegalArrangementsEntities.legalArrangementEntityCode\",\n \"fieldName\": \"legalArrangementEntityCode\"\n}\n}],\n \"pspReference\": \"9916613324987358\"\n}",
+                                        "originalRequest": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"legalArrangements\": [{\n \"legalArrangementCode\": \"cdf92f5a-a114-4ce6-8f19-c3f6ec83141c\",\n \"legalArrangementEntityCodes\": [\"755881d3-d6b0-4b34-8ace-1caceb8add63\"]\n}]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteLegalArrangements",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteLegalArrangements"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes legal arrangements and/or legal arrangement entities associated with an account holder."
+}
+                                        }
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/deletePayoutMethods",
+                "description": "Deletes payout methods associated with an account holder.",
+                 "item": [
+                            {
+                                "name": "Delete a payout method",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"payoutMethodCodes\": [\"34b6ed22-3bae-483c-83b9-bc2097a75d40\"]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deletePayoutMethods",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deletePayoutMethods"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes payout methods associated with an account holder."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/deleteShareholders",
+                "description": "Deletes shareholders associated with an account holder.",
+                 "item": [
+                            {
+                                "name": "Delete shareholders",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"shareholderCodes\": [\"9188218c-576e-4cbe-8e86-72722f453920\"]\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteShareholders",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteShareholders"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes shareholders associated with an account holder."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/deleteSignatories",
+                "description": "Deletes signatories associated with an account holder.",
+                 "item": [
+                            {
+                                "name": "Delete signatories",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"<string>\",\n \"signatoryCodes\": \"<string>\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/deleteSignatories",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "deleteSignatories"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Deletes signatories associated with an account holder."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/getUploadedDocuments",
+                "description": "Returns documents that were previously uploaded for an account holder. Adyen uses the documents during the [verification process](https://docs.adyen.com/classic-platforms/verification-process). ",
+                 "item": [
+                            {
+                                "name": "Get uploaded documents",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"bankAccountUUID\": \"EXAMPLE_UUID\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/getUploadedDocuments",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "getUploadedDocuments"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Returns documents that were previously uploaded for an account holder. Adyen uses the documents during the [verification process](https://docs.adyen.com/classic-platforms/verification-process). "
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/uploadDocument",
+                "description": "Uploads a document for an account holder. Adyen uses the documents during the [verification process](https://docs.adyen.com/classic-platforms/verification-process).",
+                 "item": [
+                            {
+                                "name": "Upload a document",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"documentContent\": \"dGVzdCBkb2N1bWVudCBjb250ZW50\",\n \"documentDetail\": {\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\",\n \"documentType\": \"PASSPORT\",\n \"filename\": \"passport.png\",\n \"description\": \"test passport description\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/uploadDocument",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "uploadDocument"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Uploads a document for an account holder. Adyen uses the documents during the [verification process](https://docs.adyen.com/classic-platforms/verification-process)."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        }
+	                    ]
+	        },
+	        {
+	            "name": "Accounts",
+	            "item": [
+	                        {
+    "name": "/closeAccount",
+                "description": "Closes an account. If an account is closed, you cannot process transactions, pay out its funds, or reopen it. If payments are made to a closed account, the payments are sent to your liable account.",
+                 "item": [
+                            {
+                                "name": "Close an account",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountCode\": \"CODE_OF_ACCOUNT\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/closeAccount",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "closeAccount"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Closes an account. If an account is closed, you cannot process transactions, pay out its funds, or reopen it. If payments are made to a closed account, the payments are sent to your liable account."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/createAccount",
+                "description": "Creates an account under an account holder. An account holder can have [multiple accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#create-additional-accounts).",
+                 "item": [
+                            {
+                                "name": "Add an account to an account holder",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountHolderCode\": \"CODE_OF_ACCOUNT_HOLDER\"\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/createAccount",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "createAccount"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Creates an account under an account holder. An account holder can have [multiple accounts](https://docs.adyen.com/classic-platforms/account-holders-and-accounts#create-additional-accounts)."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        },
+	                        {
+    "name": "/updateAccount",
+                "description": "Updates the description or payout schedule of an account.",
+                 "item": [
+                            {
+                                "name": "Set a payout schedule",
+                                "request": {
+    "method": "POST",
+    "header": [
+        {
+        "key": "Content-Type",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        },
+        {
+        "key": "Accept",
+        "value": "application/json",
+        "description": "",
+        "disabled": false
+        }
+    ],
+    "body": {
+    "mode": "raw",
+    "raw": "{\n \"accountCode\": \"CODE_OF_ACCOUNT\",\n \"payoutSchedule\": {\n \"schedule\": \"WEEKLY\",\n \"action\": \"CLOSE\"\n}\n}",
+    "options": {
+    "raw": {
+    "language": "json"
+    }
+    }
+    },
+    "url": {
+    "raw": "{{baseUrl}}/updateAccount",
+    "host": [
+    "{{baseUrl}}"
+    ],
+    "path": [
+        "updateAccount"
+    ],
+    "variable": [
+    ],
+    "query": [
+    ]
+    },
+    "description": "Updates the description or payout schedule of an account."
+}
+                                ,"response": [
+                                ]
+                            }
+                            ]
+                        }
+	                    ]
+	        }
+    ],
+    "auth": {
+    		"type": "apikey",
+    		"apikey": [
+    			{
+    				"key": "value",
+    				"value": "{{X-API-Key}}",
+    				"type": "string"
+    			},
+    			{
+    				"key": "key",
+    				"value": "X-API-Key",
+    				"type": "string"
+    			}
+    		]
+    	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://cal-test.adyen.com/cal/services/Account/v6",
+			"type": "string"
+        },
+        {
+            "key": "X-API-Key",
+            "value": "",
+            "type": "string"
+        }
+	]
+}
+
