@@ -1008,7 +1008,7 @@
 	            "name": "Verification",
 	            "item": [
 	                        {
-    "name": "/checkAccountHolder",
+    "name": "/checkAccountHolder2",
                 "description": "Triggers the verification of an account holder even if the checks are not yet required for the volume that they are currently processing.",
                  "item": [
                             {
@@ -1039,12 +1039,12 @@
     }
     },
     "url": {
-    "raw": "{{baseUrl}}/checkAccountHolder",
+    "raw": "{{baseUrl}}/checkAccountHolder2",
     "host": [
     "{{baseUrl}}"
     ],
     "path": [
-        "checkAccountHolder"
+        "checkAccountHolder2"
     ],
     "variable": [
     ],
